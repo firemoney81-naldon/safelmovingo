@@ -1,23 +1,690 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+    <!-- JSON-LD Schema: 서비스 정보 제공 (2.5톤 이사 서비스) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "2.5톤 이사 서비스",
+      "provider": {
+        "@type": "Organization",
+        "name": "2.5톤 이사 전문 업체",
+        "url": "https://yourdomain.com",
+        "logo": "https://yourdomain.com/logo.png"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "대한민국"
+      },
+      "description": "2.5톤 이사 전문 서비스로 고객 맞춤형 포장 이사, 반포장 이사, 일반 이사를 제공합니다.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "2.5톤 이사 서비스 가격",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "2.5톤 포장이사"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "500000",
+              "priceCurrency": "KRW",
+              "description": "포장, 운반, 정리 정돈까지 모든 것을 맡기는 편리한 서비스"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "2.5톤 반포장이사"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "400000",
+              "priceCurrency": "KRW",
+              "description": "포장은 업체에서, 정리는 고객이 하는 합리적인 서비스"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "@id": "https://yourdomain.com/2_5_ton_general_moving_service",
+              "name": "2.5톤 일반이사"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "300000",
+              "priceCurrency": "KRW",
+              "description": "큰 짐 운반만 업체에 맡기는 경제적인 서비스"
+            }
+          }
+        ]
+      },
+      "url": "https://yourdomain.com"
+    }
+    </script>
+
+    <style>
+        /* 기본 스타일 및 폰트 설정 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            background-color: #f7f9fc; /* 부드러운 배경색 */
+            color: #333; /* 기본 텍스트 색상 */
+        }
+
+        /* 헤더 섹션 스타일 */
+        header {
+            background-color: #004a8f; /* 짙은 파란색, 신뢰감 강조 */
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* 네비게이션 스타일 */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1rem;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* 메인 콘텐츠 영역 */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+        }
+        section h2 {
+            color: #004a8f; /* 메인 색상 */
+            font-size: 2.2rem;
+            font-weight: 700;
+            border-left: 5px solid #004a8f;
+            padding-left: 1rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        section h3 {
+            color: #004a8f;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* 텍스트 및 단락 스타일 */
+        section p, section li, section dd {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #555;
+            text-align: justify;
+        }
+        section strong {
+            color: #004a8f;
+            font-weight: 700;
+        }
+
+        /* CTA 버튼 스타일 */
+        .cta-button {
+            display: block;
+            background-color: #ff6f61; /* 강조 색상 */
+            color: white;
+            font-weight: 700;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 2rem auto;
+            text-align: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(255, 111, 97, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            max-width: 300px;
+        }
+        .cta-button:hover {
+            background-color: #e65c52;
+            transform: translateY(-3px);
+        }
+
+        /* 키워드 태그 스타일 */
+        .keyword-tags {
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-top: 1px dashed #e0e0e0;
+            padding-top: 1.5rem;
+        }
+        .keyword-tags a {
+            background-color: #e3f2fd;
+            color: #004a8f;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .keyword-tags a:hover {
+            background-color: #bbdefb;
+        }
+
+        /* 표 스타일 (서비스 가격) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1rem;
+            border: 1px solid #e0e0e0;
+        }
+        th {
+            background-color: #004a8f;
+            color: white;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .price-highlight {
+            font-weight: 700;
+            color: #ff6f61;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ 아코디언 스타일 */
+        dl {
+            margin-top: 1.5rem;
+        }
+        dt {
+            background-color: #f1f7fe;
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+        dt:hover {
+            background-color: #e0eafb;
+        }
+        dt.active::after {
+            content: '-';
+        }
+        dt::after {
+            content: '+';
+            font-size: 1.2rem;
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        dd {
+            padding: 1rem 1.5rem;
+            margin-left: 0;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none; /* 기본 숨김 */
+        }
+        dt[aria-expanded="true"] + dd {
+            display: block; /* 펼치기 */
+        }
+
+        /* 체크리스트 스타일 */
+        .check-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .check-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+        }
+        .check-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            background-color: #28a745;
+            border-radius: 50%;
+        }
+        .check-list li::after {
+            content: '✓';
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 12px;
+        }
+
+        /* 외부 링크 섹션 스타일 */
+        .external-links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .external-links li {
+            margin-bottom: 10px;
+        }
+        .external-links a {
+            color: #004a8f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed #004a8f;
+            transition: color 0.3s ease;
+        }
+        .external-links a:hover {
+            color: #ff6f61;
+        }
+
+        /* 풋터 스타일 */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            font-size: 0.9rem;
+            color: #777;
+            background-color: #e9ecef;
+            margin-top: 2rem;
+        }
+
+        /* 입력 폼 섹션 스타일 (체류 시간 증진용) */
+        .quote-form-container {
+            background-color: #f1f7fe;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .quote-form-container input[type="text"],
+        .quote-form-container select,
+        .quote-form-container textarea {
+            width: calc(100% - 2rem);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .quote-form-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        .quote-form-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .quote-form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>2.5톤 이사, 전문가가 제안하는 완벽 가이드</h1>
+        <p>합리적인 가격과 차별화된 서비스로 고객님의 새로운 시작을 함께합니다.</p>
+        <nav>
+            <ul>
+                <li><a href="#service">서비스 종류</a></li>
+                <li><a href="#price">가격 비교</a></li>
+                <li><a href="#process">이사 준비 과정</a></li>
+                <li><a href="#coverage">서비스 지역</a></li>
+                <li><a href="#contact">견적 문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <!-- 서비스 개요 섹션 (Service) -->
+        <section id="service">
+            <h2>2.5톤 이사 서비스, 왜 필요할까요?</h2>
+            <p><strong>2.5톤이사</strong>는 짐의 양이 1톤 용달 트럭으로 감당하기에 많고, 5톤 트럭을 부르기에는 애매한 1인 가구 또는 소형 2인 가구에 가장 적합한 이사 형태입니다. 특히 원룸, 1.5룸, 소형 아파트(10평대) 이사에 최적화되어 있습니다. 고객님의 짐량과 예산에 맞춰 포장이사, 반포장이사, 일반이사 등 맞춤형 서비스를 제공하며, 숙련된 이사 전문가들이 안전하고 신속하게 운반을 진행합니다.</p>
+
+            <h3>2.5톤 트럭 적재량 상세 분석 (2026년 기준)</h3>
+            <p>2.5톤 트럭의 적재량은 일반적인 1톤 트럭의 약 2배, 5톤 트럭의 절반 수준입니다. 침대(퀸 사이즈), 냉장고(대형), 세탁기(드럼/통돌이), TV, 소파 등 필수 가구를 포함하고, 여기에 옷가지와 주방용품 등 잔짐이 어느 정도 되는 경우에 적합합니다. 2.5톤 이사가 필요한 일반적인 짐 구성은 다음과 같습니다.</p>
+            <ul>
+                <li><strong>가구:</strong> 침대 1개 (퀸/킹), 3~4인용 소파, 책상, 서랍장 1~2개, 식탁(4인용)</li>
+                <li><strong>가전:</strong> 냉장고 1개 (500L급), 세탁기 1개, 에어컨, TV (50인치급)</li>
+                <li><strong>잡화:</strong> 이삿짐 박스 (5호 박스 기준) 약 30~40개 분량</li>
+            </ul>
+            <p>만약 짐이 이보다 적다면 1톤 용달 이사를, 많다면 5톤 포장이사를 고려해야 합니다. 정확한 견적을 위해선 전문가와 상담하여 짐량을 정확히 파악하는 것이 중요합니다.</p>
+
+            <h3>서비스 종류별 비교: 포장이사, 반포장이사, 일반이사</h3>
+            <p>2.5톤 이사 서비스를 선택할 때는 고객님의 예산과 작업 가능 여부에 따라 세 가지 종류 중 하나를 선택할 수 있습니다. 각 서비스의 특징과 비용 차이를 정확히 비교하여 합리적인 선택을 도와드립니다.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>포장이사</th>
+                        <th>반포장이사</th>
+                        <th>일반이사</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>포장</strong></td>
+                        <td>전담팀이 모든 짐을 포장</td>
+                        <td>큰 짐만 전담팀이 포장, 잔짐은 고객 직접 포장</td>
+                        <td>모든 짐을 고객 직접 포장</td>
+                    </tr>
+                    <tr>
+                        <td><strong>운반</strong></td>
+                        <td>전문 차량 운송 및 하역</td>
+                        <td>전문 차량 운송 및 하역</td>
+                        <td>전문 차량 운송 및 하역</td>
+                    </tr>
+                    <tr>
+                        <td><strong>정리</strong></td>
+                        <td>전담팀이 모든 짐을 정리정돈</td>
+                        <td>큰 짐만 전담팀이 정리, 잔짐은 고객 직접 정리</td>
+                        <td>모든 짐을 고객 직접 정리</td>
+                    </tr>
+                    <tr>
+                        <td><strong>비용</strong></td>
+                        <td>가장 높음</td>
+                        <td>중간 수준</td>
+                        <td>가장 낮음</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 가격 및 비용 상세 분석 섹션 (Price) -->
+        <section id="price">
+            <h2>2.5톤 이사 비용 상세 분석 (2026년 최신 데이터)</h2>
+            <p><strong>2.5톤이사 비용</strong>은 단순히 차량 크기만으로 결정되지 않습니다. 이사 형태, 이사 거리, 작업 환경, 계절 등 다양한 요인이 복합적으로 작용합니다. 2026년 기준으로 합리적인 견적을 받기 위해 알아야 할 핵심 요소들을 자세히 설명해 드립니다.</p>
+
+            <h3>1. 비용을 결정하는 5대 핵심 요인</h3>
+            <ol>
+                <li><strong>이사 형태 (포장/반포장/일반):</strong> 포장이사가 가장 비싸고, 일반이사가 가장 저렴합니다. 인건비와 서비스 범위에 따른 차이입니다.</li>
+                <li><strong>짐의 양:</strong> 동일한 2.5톤 차량이라도 짐이 적재함을 가득 채우는지 여부, 추가적인 짐(옵션 가구, 가전) 유무에 따라 비용이 달라집니다. 짐량이 많은 1.5룸과 적은 2룸의 비용이 비슷할 수 있습니다.</li>
+                <li><strong>이사 거리 및 작업 시간:</strong> 이사하는 곳과 도착지 사이의 거리가 멀수록 운반 시간이 길어져 비용이 증가합니다. 또한 사다리차 이용 유무, 엘리베이터 유무 등 작업 환경이 작업 시간에 영향을 미칩니다.</li>
+                <li><strong>추가 옵션 서비스:</strong> 에어컨 설치, 벽걸이 TV 설치, 돌침대 분해/조립, 피아노 운반 등 특수 작업이 필요한 경우 추가 비용이 발생합니다.</li>
+                <li><strong>이사 날짜:</strong> 주말이나 '손 없는 날'은 이사 수요가 많아 평일보다 10~20%가량 비용이 상승할 수 있습니다. 2026년 '손 없는 날'은 3월 25~26일, 4월 24~25일, 5월 22~23일 등이 있습니다.</li>
+            </ol>
+
+            <h3>2. 2.5톤 이사 비용 투명 견적표</h3>
+            <p>아래 표는 2026년 기준, 일반적인 서울/경기 지역 내 이동 시의 평균적인 <strong>2.5톤 이사 비용</strong>을 나타냅니다. 정확한 견적은 방문 견적을 통해 받아보시는 것이 좋습니다.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>서비스 종류</th>
+                        <th>대략적인 비용 (VAT 별도, 평일 기준)</th>
+                        <th>주요 고객층</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>2.5톤 포장이사</strong></td>
+                        <td><span class="price-highlight">50만원 ~ 80만원</span></td>
+                        <td>바쁜 직장인, 짐 정리 시간이 부족한 고객</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2.5톤 반포장이사</strong></td>
+                        <td><span class="price-highlight">40만원 ~ 60만원</span></td>
+                        <td>예산 절감과 편리함을 동시에 원하는 고객</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2.5톤 일반이사</strong></td>
+                        <td><span class="price-highlight">30만원 ~ 45만원</span></td>
+                        <td>모든 짐을 직접 포장할 수 있는 고객</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>참고:</strong> 위 비용은 평균치이며, 층수, 거리, 이사 시기 등에 따라 변동 폭이 큽니다. 정확한 견적을 위해 전문업체와 상담이 필수입니다.</p>
+        </section>
+
+        <!-- 이사 준비 과정 (Process) -->
+        <section id="process">
+            <h2>이사 준비, 이것만 알면 끝! 2026년 이사 체크리스트</h2>
+            <p>성공적인 이사는 철저한 준비에서 시작됩니다. 2.5톤 이사를 계획하고 계신 고객님들을 위해 이사 전후 반드시 확인해야 할 체크리스트를 시간대별로 정리했습니다.</p>
+
+            <h3>1. 이사 2~4주 전 체크리스트</h3>
+            <ul class="check-list">
+                <li>이사 형태 결정 및 업체 선정: 짐 양에 따른 2.5톤 이사 결정 후 2~3곳 비교 견적 받기.</li>
+                <li>이사 날짜 확정: 손 없는 날, 주말 등 피크타임 확인 후 예약.</li>
+                <li>이사할 곳 사전 방문: 집 구조, 엘리베이터, 주차 공간, 짐 배치 공간 확인.</li>
+                <li>가구/가전 배치 계획: 미리 배치도를 그려두면 이사 당일 시간을 절약할 수 있습니다.</li>
+                <li>불필요한 짐 정리: 사용하지 않는 물건은 미리 버리거나 기부하여 짐량을 줄입니다.</li>
+            </ul>
+
+            <h3>2. 이사 1주 전 체크리스트</h3>
+            <ul class="check-list">
+                <li>공과금 정산 예약: 전기, 수도, 가스 요금은 미리 정산 신청합니다. (특히 도시가스는 이사 당일 직원의 방문이 필요)</li>
+                <li>주소지 변경 신고: 우체국 '주소 이전 서비스'를 이용하면 3개월간 우편물 자동 이전.</li>
+                <li>이사 당일 식사 준비: 이사 당일에는 외식하거나 간편식으로 준비합니다.</li>
+                <li>귀중품 별도 보관: 현금, 통장, 인감 등 귀중품은 따로 챙겨서 직접 운반합니다.</li>
+            </ul>
+
+            <h3>3. 이사 당일 및 이후 체크리스트</h3>
+            <ul class="check-list">
+                <li>최종 짐 확인: 모든 짐이 포장되었는지 확인하고, 파손 위험 물품을 재점검합니다.</li>
+                <li>이사 완료 후 확인: 짐이 모두 도착했는지 확인하고, 파손된 부분이 없는지 꼼꼼하게 점검합니다.</li>
+                <li>전입신고 및 확정일자: 전입신고는 14일 이내, 확정일자는 즉시 받는 것이 좋습니다.</li>
+            </ul>
+        </section>
+        
+        <!-- 서비스 지역 섹션 (Coverage - SEO 키워드 확장) -->
+        <section id="coverage">
+            <h2>전국 2.5톤 이사 서비스 지역 및 성공 사례</h2>
+            <p><strong>2.5톤이사</strong> 서비스는 전국 단위로 운영됩니다. 특히 이사 수요가 많은 수도권과 광역시를 중심으로 꼼꼼한 서비스망을 구축하고 있습니다. 고객님의 이사 지역과 관련된 다양한 성공 사례를 통해 저희의 전문성을 확인해 보세요.</p>
+
+            <h3>1. 수도권 지역 2.5톤 이사 (서울 및 경기도)</h3>
+            <p>서울과 경기도 지역은 이사가 빈번하며, 2.5톤 이사 수요가 가장 많은 지역입니다. 특히 1인 가구 밀집 지역인 서울 강남구, 송파구, 강서구, 영등포구, 노원구, 은평구, 광진구 등에서의 이사 경험이 풍부합니다. 또한 경기도 성남시, 수원시, 용인시, 고양시, 화성시, 부천시, 안산시, 남양주시, 김포시, 광명시 등 주요 도시에서 <strong>2.5톤 포장이사</strong> 및 <strong>반포장이사</strong> 서비스를 성공적으로 제공해 왔습니다. 복잡한 도심 환경과 좁은 골목길에서도 숙련된 전문가들이 신속하고 안전하게 이사를 진행합니다.</p>
+
+            <h3>2. 지방 광역시 및 기타 지역 서비스 (부산, 대구, 인천, 대전, 광주)</h3>
+            <p>수도권 외 지역에서도 2.5톤 이사 수요는 꾸준합니다. 특히 부산 해운대구, 수영구, 대구 수성구, 달서구, 광주 서구, 남구, 대전 유성구, 서구, 인천 연수구, 부평구 등 광역시 중심부 이사는 물론, 충남 천안시, 충북 청주시, 전북 전주시, 경북 포항시, 경남 창원시, 강원도 원주시, 춘천시 등 전국 주요 도시에서 <strong>2.5톤 이사 서비스</strong>를 제공합니다. 장거리 이사 시에도 꼼꼼한 포장과 안전한 운송 시스템을 통해 고객 만족도를 높이고 있습니다.</p>
+
+            <h3>3. 키워드 기반 서비스 제공 지역 (연관 검색어 확장)</h3>
+            <p>2.5톤 이사는 <strong>원룸이사</strong>, <strong>소형이사</strong>, <strong>용달이사</strong>, <strong>오피스텔이사</strong> 등 다양한 키워드로 검색됩니다. 저희는 고객의 짐량에 맞춰 1톤, 2.5톤, 5톤 이사를 유연하게 제공하며, 짐이 적거나 가구 몇 개만 운반하는 <strong>소량 이사</strong>의 경우에도 2.5톤 트럭을 활용하여 신속하게 서비스를 진행합니다. 특히 <strong>장거리 이사 비용</strong>을 합리적으로 산출하여 고객 부담을 최소화합니다.</p>
+
+            <!-- 키워드 태그 목록 (SEO 최적화) -->
+            <div class="keyword-tags" aria-label="관련 이사 키워드 목록">
+                <a href="#coverage">서울 2.5톤이사</a>
+                <a href="#coverage">경기 2.5톤이사</a>
+                <a href="#coverage">수원 2.5톤이사</a>
+                <a href="#coverage">용인 2.5톤이사</a>
+                <a href="#coverage">성남 2.5톤이사</a>
+                <a href="#coverage">인천 2.5톤이사</a>
+                <a href="#coverage">부산 2.5톤이사</a>
+                <a href="#coverage">대구 2.5톤이사</a>
+                <a href="#coverage">대전 2.5톤이사</a>
+                <a href="#coverage">광주 2.5톤이사</a>
+                <a href="#price">2.5톤이사비용</a>
+                <a href="#price">2.5톤 포장이사 가격</a>
+                <a href="#price">2.5톤 반포장이사 비용</a>
+                <a href="#service">2.5톤 원룸이사</a>
+                <a href="#service">2.5톤 소형이사</a>
+                <a href="#price">2.5톤 용달이사 비용</a>
+                <a href="#faq">이사 견적 비교</a>
+                <a href="#faq">이사 체크리스트</a>
+                <a href="#coverage">천안 2.5톤이사</a>
+                <a href="#coverage">청주 2.5톤이사</a>
+                <a href="#coverage">전주 2.5톤이사</a>
+                <a href="#coverage">포항 2.5톤이사</a>
+                <a href="#coverage">창원 2.5톤이사</a>
+                <a href="#coverage">강릉 2.5톤이사</a>
+                <a href="#coverage">제주 2.5톤이사</a>
+                <a href="#coverage">세종 2.5톤이사</a>
+                <a href="#coverage">평택 2.5톤이사</a>
+                <a href="#coverage">김해 2.5톤이사</a>
+                <a href="#coverage">울산 2.5톤이사</a>
+                <a href="#coverage">구미 2.5톤이사</a>
+            </div>
+        </section>
+
+        <!-- 자주 묻는 질문 (FAQ) -->
+        <section id="faq">
+            <h2>자주 묻는 질문 (Naver 지식iN 기반)</h2>
+            <p><strong>네이버 지식iN</strong>에서 <strong>'2.5톤이사'</strong>를 검색하신 많은 분들이 궁금해하시는 질문들을 정리했습니다. 이사 준비 중 궁금증을 해결해 보세요.</p>
+            <dl>
+                <dt tabindex="0" aria-expanded="false">Q1. 2.5톤 이사와 1톤 이사의 차이는 정확히 무엇인가요?</dt>
+                <dd>1톤 이사는 주로 짐이 매우 적은 1인 가구, 즉 짐이 이삿짐 박스 10~15개 내외이며 가전/가구가 적을 때 적합합니다. 반면 2.5톤 이사는 1.5룸이나 소형 2인 가구의 짐량으로, 가전/가구가 포함된 이사에 적합합니다. 짐량이 애매한 경우 전문가의 정확한 방문 견적을 받는 것이 좋습니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q2. 이사 비용을 절약할 수 있는 방법이 있나요?</dt>
+                <dd>네, 몇 가지 방법이 있습니다. 첫째, 불필요한 짐을 미리 정리하여 짐량을 줄입니다. 짐량이 줄면 이사 비용도 낮아집니다. 둘째, '손 없는 날'이나 주말을 피해 평일에 이사합니다. 셋째, 포장이사 대신 반포장이사 또는 일반이사를 선택하여 인건비를 절약합니다. 넷째, 이사 업체 여러 곳에서 견적을 비교해봅니다. 저희는 합리적인 견적을 제시합니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q3. 이사 중 짐 파손이나 분실 시 보상은 어떻게 이루어지나요?</dt>
+                <dd>저희는 화물자동차 운수사업법에 따라 적재물배상책임보험에 가입되어 있습니다. 이사 중 짐 파손이나 분실이 발생할 경우, 보험을 통해 신속하고 공정하게 보상이 이루어집니다. 이사 당일 계약서에 명시된 보험 내용을 반드시 확인하시기 바랍니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q4. 이사 견적 시 사다리차 사용은 반드시 필요한가요?</dt>
+                <dd>고층(일반적으로 3층 이상) 이사 시 사다리차 사용은 선택이 아닌 필수일 수 있습니다. 사다리차를 이용하면 이사 시간이 단축되고 짐 파손 위험이 줄어듭니다. 엘리베이터 사용 가능 여부와 아파트 관리 규정, 층수 등을 고려하여 사다리차 사용 여부를 결정하며, 견적 시 미리 말씀해 주시면 정확한 비용을 안내해 드립니다.</dd>
+                <dt tabindex="0" aria-expanded="false">Q5. 2.5톤 용달 이사 시 준비해야 할 사항은 무엇인가요?</dt>
+                <dd>용달 이사는 기본적으로 운송만 지원하는 형태입니다. 따라서 고객님께서 모든 짐을 이사 당일 트럭 앞에 내려놓을 수 있도록 미리 포장하고 준비해두셔야 합니다. 짐 운반을 위한 인력(도우미)이 필요한 경우 미리 문의하여 추가 비용을 지불하고 서비스를 이용할 수 있습니다.</dd>
+            </dl>
+        </section>
+
+        <!-- 신뢰성 정보 제공 섹션 (External Links) -->
+        <section class="external-links">
+            <h2>신뢰성 있는 이사 정보: 외부 사이트 참고</h2>
+            <p>안전한 이사를 위해 정부 기관 및 공공기관에서 제공하는 유용한 정보를 확인해 보세요. 저희는 관련 법규 및 규정을 준수하며 투명하게 운영됩니다.</p>
+            <ul>
+                <li><a href="https://www.ftc.go.kr/www/cpw/service/selectBusi.do?key=670&busiType=08" target="_blank">이사화물 표준약관 (공정거래위원회)</a></li>
+                <li><a href="https://www.kca.go.kr/home/main.do" target="_blank">이사 관련 소비자 분쟁 해결 기준 (한국소비자원)</a></li>
+                <li><a href="https://www.koreapost.go.kr/" target="_blank">우체국 주소 이전 서비스 (우정사업본부)</a></li>
+                <li><a href="https://namu.wiki/w/%ED%8F%AC%EC%9E%A5%EC%9D%B4%EC%82%AC" target="_blank">포장이사에 대한 나무위키 정보</a></li>
+                <li><a href="https://www.molit.go.kr/" target="_blank">이사화물 운송 관련 법규 및 정책 (국토교통부)</a></li>
+            </ul>
+        </section>
+
+        <!-- 상세 견적 요청 (Contact - 체류 시간 증진용) -->
+        <section id="contact">
+            <h2>무료 방문 견적 신청: 2.5톤 이사 견적 문의</h2>
+            <p>2.5톤 이사 비용은 짐의 양, 이사 날짜, 작업 환경에 따라 크게 달라집니다. 정확한 견적을 위해 무료 방문 상담을 신청해 주세요. 전문가가 직접 짐의 양을 확인하고 맞춤형 견적을 제시합니다.</p>
+
+            <!-- 입력 양식 시뮬레이션 (체류 시간 증진 목적) -->
+            <div class="quote-form-container">
+                <h3>이사 정보 입력란</h3>
+                <form action="#" method="post">
+                    <label for="moving-type">이사 형태 선택:</label>
+                    <select id="moving-type" name="moving_type">
+                        <option value="pack">2.5톤 포장이사</option>
+                        <option value="half-pack">2.5톤 반포장이사</option>
+                        <option value="general">2.5톤 일반이사</option>
+                    </select>
+
+                    <label for="move-date">이사 희망 날짜:</label>
+                    <input type="date" id="move-date" name="move_date" required>
+
+                    <label for="start-address">출발지 주소 (시/구):</label>
+                    <input type="text" id="start-address" name="start_address" placeholder="예: 서울특별시 강남구" required>
+
+                    <label for="end-address">도착지 주소 (시/구):</label>
+                    <input type="text" id="end-address" name="end_address" placeholder="예: 경기도 수원시 영통구" required>
+
+                    <label for="description">짐의 양 상세 설명 (선택 사항):</label>
+                    <textarea id="description" name="description" rows="5" placeholder="가구 종류, 대형 가전 유무, 이사 짐량에 대한 구체적인 설명을 남겨주세요."></textarea>
+
+                    <label for="name">고객 성함:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="phone">연락처:</label>
+                    <input type="text" id="phone" name="phone" placeholder="010-xxxx-xxxx" required>
+
+                    <button type="submit">무료 견적 상담 신청하기</button>
+                </form>
+            </div>
+
+            <p class="mt-4">전화 상담을 원하시면 아래 번호로 문의해 주세요.</p>
+            <ul>
+                <li><strong>전화:</strong> <a href="tel:01012345678">010-1234-5678</a></li>
+                <li><strong>이메일:</strong> <a href="mailto:contact@yourdomain.com">contact@yourdomain.com</a></li>
+            </ul>
+        </section>
     </main>
-  </body>
-</html>
+
+    <footer>
+        <p>Copyright &copy; 2025 2.5톤 이사 전문 업체. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for FAQ Accordion functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dtElements = document.querySelectorAll('dl dt');
+            dtElements.forEach(dt => {
+                dt.addEventListener('click', () => {
+                    const ddElement = dt.nextElementSibling;
+                    const isExpanded = dt.getAttribute('aria-expanded') === 'true';
+
+                    // Collapse all other items
+                    dtElements.forEach(item => {
+                        if (item !== dt) {
+                            item.setAttribute('aria-expanded', 'false');
+                            item.nextElementSibling.style.display = 'none';
+                        }
+                    });
+
+                    // Toggle current item
+                    if (isExpanded) {
+                        dt.setAttribute('aria-expanded', 'false');
+                        ddElement.style.display = 'none';
+                    } else {
+                        dt.setAttribute('aria-expanded', 'true');
+                        ddElement.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+
+  
